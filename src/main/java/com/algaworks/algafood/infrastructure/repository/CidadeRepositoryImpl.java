@@ -8,33 +8,33 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.algaworks.algafood.domain.model.Restaurante;
-import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.model.Cidade;
+import com.algaworks.algafood.domain.repository.CidadeRepository;
 
 @Component
-public class RestauranteRepositoryImpl implements RestauranteRepository{
+public class CidadeRepositoryImpl implements CidadeRepository{
 
 	@PersistenceContext
 	private EntityManager manager;
 	
 	@Override
-	public List<Restaurante> listar(){
-		return manager.createQuery("from Restaurante",Restaurante.class)
+	public List<Cidade> listar(){
+		return manager.createQuery("from Cidade",Cidade.class)
 				.getResultList();
 	}
 	
 	@Override
 	@Transactional
-	public Restaurante salvar(Restaurante cozinha) {
+	public Cidade salvar(Cidade cozinha) {
 		return manager.merge(cozinha);
 	}
 	@Override
-	public Restaurante buscar(Long id) {
-		return manager.find(Restaurante.class, id);
+	public Cidade buscar(Long id) {
+		return manager.find(Cidade.class, id);
 	}
 	@Override
 	@Transactional
-	public void remover (Restaurante cozinha) {
+	public void remover (Cidade cozinha) {
 		cozinha = buscar(cozinha.getId());
 		manager.remove(cozinha);
 	}

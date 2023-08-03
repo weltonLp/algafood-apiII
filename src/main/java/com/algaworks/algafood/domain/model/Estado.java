@@ -8,34 +8,28 @@ import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 @Data
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Cozinha {
-	@EqualsAndHashCode.Include
+@Entity
+public class Estado {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	
 	@Column(nullable = false)
 	private String nome;
-	
-//	@OneToMany
-//	private List<Restaurante> restaurante = new ArrayList<>();
-	
-	
-	public Cozinha() {
+
+	public Estado() {
 		super();
 	}
-	
-	public Cozinha(String nome) {
+
+	public Estado(String nome) {
 		super();
 		this.nome = nome;
 	}
-
-
-
-
 	
 	
 }
