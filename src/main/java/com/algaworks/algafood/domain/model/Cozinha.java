@@ -19,12 +19,11 @@ public class Cozinha {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonProperty("titulo")//ALTERA O NOME DO ATRIBUTO NA REPRESENTAÇÃO
+	
 	@Column(nullable = false)
 	private String nome;
 	
-//	@OneToMany
-//	private List<Restaurante> restaurante = new ArrayList<>();
+
 	
 	
 	public Cozinha() {
