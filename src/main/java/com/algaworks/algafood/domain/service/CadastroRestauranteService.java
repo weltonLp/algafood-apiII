@@ -8,23 +8,38 @@ import org.springframework.stereotype.Service;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
+import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @Service
-public class CadastroCozinhaService {
+public class CadastroRestauranteService {
+	
+	@Autowired
+	private RestauranteRepository restauranteRepository;
 	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
-	public Cozinha salvar(Cozinha salvar) {
+	public Restaurante salvar(Restaurante restaurante) {
 		
-		return cozinhaRepository.salvar(salvar);
+		Long cozinhaId = restaurante.getCozinha().getId();
+		
+		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+		
+		if(cozinha == null) {
+			throw new EntidadeNaoEncontradaException(
+					String.format("Não existe cozinha com o código %d", cozinhaId));
+		}
+		restaurante.setCozinha(cozinha);
+		
+		return restauranteRepository.salvar(restaurante);
 	}
 	
 	
 	public void excluir(Long id) {
 		try {
-			cozinhaRepository.remover(id);
+			restauranteRepository.remover(id);
 			
 		}catch(EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
