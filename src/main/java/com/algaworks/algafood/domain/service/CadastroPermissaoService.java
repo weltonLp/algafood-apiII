@@ -9,37 +9,25 @@ import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algaworks.algafood.domain.model.Cidade;
-import com.algaworks.algafood.domain.model.Estado;
-import com.algaworks.algafood.domain.repository.CidadeRepository;
-import com.algaworks.algafood.domain.repository.EstadoRepository;
+import com.algaworks.algafood.domain.model.Permissao;
+import com.algaworks.algafood.domain.repository.PermissaoRepository;
 
 @Service
-public class CadastroCidadeService {
+public class CadastroPermissaoService {
 	
 	@Autowired
-	private CidadeRepository cidadeRepository;
+	private PermissaoRepository permissaoRepository;
 	
-	@Autowired
-	private EstadoRepository estadoRepository;
 	
-	public Cidade salvar(Cidade cidade) {
+	public Permissao salvar(Permissao permissao) {
 		
-		Long estadoId = cidade.getEstado().getId();
-		Optional<Estado> estado = estadoRepository.findById(estadoId);
 		
-		if (estado.isEmpty()) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Estado de código %d não existe", estadoId));
-		}
-		cidade.setEstado(estado.get());
-		return cidadeRepository.save(cidade);
+		return permissaoRepository.save(permissao);
 	}
 	
-	
-	public void excluir(Long id) {
+	public void deletar(Long id) {
 		try {
-			cidadeRepository.deleteById(id);
+			permissaoRepository.deleteById(id);
 			
 		}catch(EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
@@ -52,27 +40,3 @@ public class CadastroCidadeService {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

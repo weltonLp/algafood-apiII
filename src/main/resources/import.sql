@@ -11,3 +11,5 @@ insert into estado(nome) values ('Goiás'),('São Paulo'),('Rio de Janeiro');
 insert into cidade(nome, estado_id) values ('Goiânia', 1),('Ribeirão Preto', 2), ('Niterói', 3);
 
 insert into permissao (nome, descricao) values ('Júnior', 'Pouco privilégio no sistema'),('Sênior', 'Privilégio avançado');
+
+insert into forma_pagamento (descricao) value ('Cartão de Crédito'), ('Cartão de Débito'); 

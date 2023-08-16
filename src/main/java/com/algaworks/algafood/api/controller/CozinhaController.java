@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -37,18 +37,18 @@ public class CozinhaController {
 	
 	@GetMapping
 	public List<Cozinha>listar (){
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscar(@PathVariable Long id) {
-		Cozinha cozinha = cozinhaRepository.buscar(id);
+	public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
 		
-		if(cozinha != null) {
+		if(cozinha.isPresent()) {
 			
-			return ResponseEntity.ok(cozinha); 
+			return ResponseEntity.ok(cozinha.get()); 
 		}else {
 //			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			return ResponseEntity.notFound().build();
@@ -70,13 +70,13 @@ public class CozinhaController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha){
-		Cozinha novo = cozinhaRepository.buscar(id);
+		Optional<Cozinha> novo = cozinhaRepository.findById(id);
 //		novo.setId(cozinha.getId());
 //		novo.setNome(cozinha.getNome());
-		if(novo != null) {
-			BeanUtils.copyProperties(cozinha, novo, "id");
-			cozinhaRepository.salvar(novo);			
-			return ResponseEntity.ok(novo);
+		if(novo.isPresent()) {
+			BeanUtils.copyProperties(cozinha, novo.get(), "id");
+			Cozinha cozinhaSalva = cozinhaService.salvar(novo.get());			
+			return ResponseEntity.ok(cozinhaSalva);
 		}
 		return ResponseEntity.notFound().build();
 	}

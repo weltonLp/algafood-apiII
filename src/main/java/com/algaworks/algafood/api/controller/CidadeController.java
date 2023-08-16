@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,17 @@ public class CidadeController {
 	
 	@GetMapping
 	public List<Cidade>listar(){
-		return cidadeRepository.listar();
+		return cidadeRepository.findAll();
 	}
 	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Cidade>buscar(@PathVariable Long id){
 		
-		Cidade cid = cidadeRepository.buscar(id);
+		Optional<Cidade> cid = cidadeRepository.findById(id);
 		
-		if(cid != null) {
-			return ResponseEntity.ok(cid);
+		if(cid.isPresent()) {
+			return ResponseEntity.ok(cid.get());
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -58,12 +59,12 @@ public class CidadeController {
 		
 		try {
 			
-			Cidade novo = cidadeRepository.buscar(id);
+			Optional<Cidade> novo = cidadeRepository.findById(id);
 			
-			if(novo != null) {
+			if(novo.isPresent()) {
 				
-				BeanUtils.copyProperties(cidade, novo, "id");
-				cidadeService.salvar(novo);
+				BeanUtils.copyProperties(cidade, novo.get(), "id");
+				cidadeService.salvar(novo.get());
 				return ResponseEntity.ok(novo);
 				
 			}
@@ -81,8 +82,9 @@ public class CidadeController {
 	public ResponseEntity<?> remover(@PathVariable Long id){
 		try {
 			
-			cidadeRepository.remover(id);
+			cidadeService.excluir(id);
 			return ResponseEntity.noContent().build();
+			
 		}catch(EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 					.body(e.getMessage());
