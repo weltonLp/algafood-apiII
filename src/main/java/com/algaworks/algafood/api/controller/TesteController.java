@@ -25,33 +25,38 @@ public class TesteController {
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
-	@GetMapping("/cozinhas/por-nome")
-	public List<Cozinha>buscaPorNome(@RequestParam String nome){
-		return cozinhaRepository.findByNomeContaining(nome);
-	}
-	
-	
-	@GetMapping("/restaurantes/por-taxa")
-	public List<Restaurante>porTaxa(BigDecimal taxaInicial,BigDecimal taxaFinal){
-		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
-	}
-	
-	@GetMapping("/restaurantes/por-nome")
-	public List<Restaurante>porTaxa(String nome, Long id ){
-		return restauranteRepository.findByNomeContainingAndCozinhaId(nome, id);
-	}
-	
-	@GetMapping("/restaurantes/primeiro-por-nome")
-	public Optional<Restaurante>porTaxa(String nome){
-		return restauranteRepository.findFirstByNomeContaining(nome);
-	}
-	@GetMapping("/restaurantes/existe-por-nome")
-	public boolean existsNome(String nome){
-		return restauranteRepository.existsByNome(nome);
-	}
-	@GetMapping("/restaurantes/contar-por-cozinha")
-	public int contarRestaurante(Long id){
-		return restauranteRepository.countByCozinhaId(id);
+//	@GetMapping("/cozinhas/por-nome")
+//	public List<Cozinha>buscaPorNome(@RequestParam String nome){
+//		return cozinhaRepository.findByNomeContaining(nome);
+//	}
+//	
+//	
+//	@GetMapping("/restaurantes/por-taxa")
+//	public List<Restaurante>porTaxa(BigDecimal taxaInicial,BigDecimal taxaFinal){
+//		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
+//	}
+//	
+//	@GetMapping("/restaurantes/por-nome")
+//	public List<Restaurante>porTaxa(String nome, Long id ){
+//		return restauranteRepository.findByNomeContainingAndCozinhaId(nome, id);
+//	}
+//	
+//	@GetMapping("/restaurantes/primeiro-por-nome")
+//	public Optional<Restaurante>porTaxa(String nome){
+//		return restauranteRepository.findFirstByNomeContaining(nome);
+//	}
+//	@GetMapping("/restaurantes/existe-por-nome")
+//	public boolean existsNome(String nome){
+//		return restauranteRepository.existsByNome(nome);
+//	}
+//	@GetMapping("/restaurantes/contar-por-cozinha")
+//	public int contarRestaurante(Long id){
+//		return restauranteRepository.countByCozinhaId(id);
+//	}
+//	
+	@GetMapping("/restaurantes/busca-por-nome")
+	public List<Restaurante> buscar(String nome, Long id){
+		return restauranteRepository.consultaPorNome(nome, id);
 	}
 	
 	
