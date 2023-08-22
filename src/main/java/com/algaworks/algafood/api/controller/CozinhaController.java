@@ -47,7 +47,6 @@ public class CozinhaController {
 		Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
 		
 		if(cozinha.isPresent()) {
-			
 			return ResponseEntity.ok(cozinha.get()); 
 		}else {
 //			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
