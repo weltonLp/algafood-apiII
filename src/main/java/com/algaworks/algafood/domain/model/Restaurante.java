@@ -53,6 +53,10 @@ public class Restaurante {
 	@Embedded
 	private Endereco endereco;
 	
+	private Boolean ativo;
+	private Boolean aberto;
+	
+	
 	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
@@ -63,7 +67,7 @@ public class Restaurante {
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataAtualizacao;
 	
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="restaurante_forma_pagamento",
 			joinColumns = @JoinColumn(name="restaurante_id"),
@@ -74,8 +78,13 @@ public class Restaurante {
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="restaurante_usuario",
+			joinColumns = @JoinColumn(name="restaurante_id"),
+			inverseJoinColumns = @JoinColumn(name="usuario_id"))
+	private List<Usuario> responsaveis = new ArrayList<>();
 	
-//	private Boolean ativo;
 	
 	
 	

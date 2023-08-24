@@ -22,14 +22,7 @@ public class Estado {
 	@Column(nullable = false)
 	private String nome;
 
-	public Estado() {
-		super();
-	}
-
-	public Estado(String nome) {
-		super();
-		this.nome = nome;
-	}
+	
 	
 	
 }

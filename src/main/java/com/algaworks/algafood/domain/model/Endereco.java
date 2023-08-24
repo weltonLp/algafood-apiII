@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 public class Endereco {
 	
+	
 	@Column(name="endereco_logradouro")
 	private String logradouro;
 	
