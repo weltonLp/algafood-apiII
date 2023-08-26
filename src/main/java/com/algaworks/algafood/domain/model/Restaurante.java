@@ -34,6 +34,7 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	@Column(nullable = false)
 	private String nome;
 	
@@ -85,7 +86,9 @@ public class Restaurante {
 			inverseJoinColumns = @JoinColumn(name="usuario_id"))
 	private List<Usuario> responsaveis = new ArrayList<>();
 	
-	
+	@JsonIgnore
+	@OneToMany(mappedBy = "restaurante")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	
 }
