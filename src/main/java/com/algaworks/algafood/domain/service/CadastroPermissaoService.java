@@ -20,8 +20,8 @@ public class CadastroPermissaoService {
 	
 	
 	public Permissao salvar(Permissao permissao) {
-		
-		
+				
+				
 		return permissaoRepository.save(permissao);
 	}
 	

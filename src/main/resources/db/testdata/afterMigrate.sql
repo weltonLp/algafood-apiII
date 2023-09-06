@@ -36,9 +36,9 @@ insert into cidade(nome, estado_id) values ('Goiânia', 1),('Ribeirão Preto', 2
 insert into permissao (nome, descricao) values ('Júnior', 'Pouco privilégio no sistema'),('Sênior', 'Privilégio avançado');
 insert into forma_pagamento (descricao) value ('Cartão de Crédito'), ('Cartão de Débito'), ('PIX'); 
 
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_logradouro, endereco_cep, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values ('Jacan Restaurante', 16.99, 2, 'Av.Guilherme de Freitas', '75000-000', '2558D', 'Vila Sul', 'Próx à Rede Bandeirantes de Comunucação', 2, utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_logradouro, endereco_cep, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values ('Fogaça Restaurante', 14.55, 1, 'Av. Coronel Dias', '75488-080', '2558D', 'Zona Norte', 'Próx à Rede Bandeirantes de Comunucação', 1, utc_timestamp, utc_timestamp);
-
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_logradouro, endereco_cep, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, ativo, aberto, data_cadastro, data_atualizacao) values ('Jacan Restaurante', 16.99, 2, 'Av.Guilherme de Freitas', '75000-000', '2558D', 'Vila Sul', 'Próx à Rede Bandeirantes de Comunucação', 2, true, true, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_logradouro, endereco_cep, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, ativo, aberto, data_cadastro, data_atualizacao) values ('Fogaça Restaurante', 14.55, 1, 'Av. Coronel Dias', '75488-080', '2558D', 'Zona Norte', 'Próx à Rede Bandeirantes de Comunucação', 1, true, true, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_logradouro, endereco_cep, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, ativo, aberto, data_cadastro, data_atualizacao) values ('Fogaça Paolla', 14.55, 1, 'Av. Coronel Dias', '75488-080', '2558D', 'Zona Norte', 'Próx à Rede Bandeirantes de Comunucação', 1, true, true, utc_timestamp, utc_timestamp);
 
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -44,14 +45,9 @@ public class RestauranteController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Restaurante> buscar(@PathVariable Long id){
+	public Restaurante buscar(@PathVariable Long id){
 		
-		Optional<Restaurante> rest = restauranteRepository.findById(id);
-		
-		if(rest.isPresent()) {
-			return ResponseEntity.ok(rest.get());
-		}
-		return ResponseEntity.notFound().build();
+		return restauranteService.buscarOuFalhar(id);
 		
 	}
 	
@@ -70,60 +66,37 @@ public class RestauranteController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?>atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
-
-		try {
-			Optional<Restaurante> novo = restauranteRepository.findById(id);
-			
-			
-			if(novo.isPresent()) {
-				
-				BeanUtils.copyProperties(restaurante, novo.get(), "id","formasPagamento",
-						"endereco", "dataCadastro", "dataAtualizacao");			
-				Restaurante novoSalvo = restauranteService.salvar(novo.get());
-				
-				return ResponseEntity.ok(novoSalvo);
-			}
-			
-			return ResponseEntity.notFound().build();
-			
-		}catch(EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-			
-		}
-			
+	public Restaurante atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
+		
+		Restaurante res = restauranteService.buscarOuFalhar(id);
+		restaurante.setId(id);
+		
+		return restauranteService.salvar(restaurante);
 	
 	}
 	
-	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Restaurante> remover(@PathVariable Long id) {
+	public void remover(@PathVariable Long id) {
 		
-			Optional<Restaurante> res = restauranteRepository.findById(id);
-			if(res.isPresent()) {
-				
-				restauranteService.excluir(id);
-				return ResponseEntity.ok(res.get());
-			}
-			return ResponseEntity.noContent().build();
+		restauranteService.excluir(id);
 		
-	
 	}
 	
-	@PatchMapping("/{id}")
-	public ResponseEntity<?>atualizarParcial(@PathVariable Long id, 
-			@RequestBody Map<String, Object>campos ){
-		
-		Optional<Restaurante> res = restauranteRepository.findById(id);
-		
-		if(res.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		merge(campos, res.get());
-		
-		return atualizar(id, res.get());
-	}
+//	@PatchMapping("/{id}")
+//	public ResponseEntity<?>atualizarParcial(@PathVariable Long id, 
+//			@RequestBody Map<String, Object>campos ){
+//		
+//		Optional<Restaurante> res = restauranteRepository.findById(id);
+//		
+//		if(res.isEmpty()) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		
+//		merge(campos, res.get());
+//		
+//		return atualizar(id, res.get());
+//	}
 
 	private void merge(Map<String, Object> campos, Restaurante destino) {
 		ObjectMapper mapper = new ObjectMapper();
