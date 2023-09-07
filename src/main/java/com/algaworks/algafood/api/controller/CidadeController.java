@@ -53,7 +53,11 @@ public class CidadeController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cidade adicionar(@RequestBody Cidade cidade) {
 		try {
+			
+			
 			return cidadeService.salvar(cidade);
+			
+			
 		}catch(EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage());
 		}
@@ -74,7 +78,9 @@ public class CidadeController {
 				Cidade cid = cidadeService.buscarouFalhar(id);
 				
 				BeanUtils.copyProperties(cidade, cid, "id");
-				return cidadeService.salvar(cidade);
+		
+				
+				return cidadeService.salvar(cid);
 				
 			}catch(EstadoNaoEncontradoException e) {
 				throw new NegocioException(e.getMessage());
